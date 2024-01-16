@@ -14,7 +14,7 @@ interface InvoiceDetails {
 // Function to generate pdf based on invoice details
 const generatePDF = (invoiceDetails: InvoiceDetails): string => {
   const doc = new PDFDocument();
-  const pdfFilePath = `server/pdfs/${invoiceDetails.id}.pdf`;
+  const pdfFilePath = `pdfs/${invoiceDetails.id}.pdf`;
 
   // pipe the pdf to a file
   doc.pipe(fs.createWriteStream(pdfFilePath));

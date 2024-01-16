@@ -9,7 +9,8 @@ app.get('/', (req, res) => {
     res.send("hello world");
 });
 
-app.get('/generate-pdf', (req, res) => {
+app.get('/generate-pdf',(req, res) => {
+    let pdfFilePath=null;
     try {
         const invoiceDetails= {
             username: "John Doe",
@@ -21,16 +22,17 @@ app.get('/generate-pdf', (req, res) => {
             id: 1,
         };
 
-        const pdfFilePath = generatePDF(invoiceDetails);
+        const pdfFilePath =generatePDF(invoiceDetails);
 
-        res.sendFile(pdfFilePath, (err) => {
+        res.download(pdfFilePath,`${invoiceDetails.id}.pdf` ,(err) => {
             if (err) {
                 res.status(500).send('Error sending pdf');
             }
+            
 
-            cleanupPDF(pdfFilePath);
         });
     } catch (error) {
+        console.error('Error',error);
         res.status(500).send('Error generating PDF');
     }
 });
